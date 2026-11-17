@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proporcionalidad · Profesor Carlos Huancaya Matos</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eef3f9;color:#172c45;font:18px/1.5 system-ui,sans-serif}header{background:#163b65;color:white;padding:24px max(20px,calc((100% - 800px)/2))}h1{font-size:clamp(28px,5vw,42px);margin:0}main{max-width:840px;margin:24px auto;padding:0 16px}article{background:white;padding:clamp(16px,4vw,34px);border-radius:18px;box-shadow:0 8px 30px #163b6515}h2{margin:0}progress{width:100%;accent-color:#08766c}label{display:block;font-weight:650;margin-top:14px}input,textarea,select,button{font:inherit;border-radius:8px;padding:8px 12px}input,textarea,select{border:1px solid #73859a;width:100%;background:white;color:inherit}textarea{min-height:100px;resize:vertical}button{background:#12665e;color:white;border:0;cursor:pointer}button.secondary{background:#e1eaf5;color:#163b65}button:disabled{opacity:.48;cursor:default}nav,.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}details{margin-top:12px;background:#edf6f4;padding:10px 14px;border-radius:8px}summary{cursor:pointer;font-weight:650}:focus-visible{outline:3px solid #ad4e00;outline-offset:3px}#status{min-height:1.5em;margin-top:10px;font-weight:650}.meta{color:#455d76;font-size:.9em}
+
+body{background:radial-gradient(ellipse at top right,#dbfff4,transparent 55%),#f0f3ff;font-family:"Atkinson Hyperlegible Next",system-ui,sans-serif}
+header{padding:0;background:linear-gradient(115deg,#262265,#48339a 60%,#265d87)}
+.hero{max-width:960px;margin:auto;padding:24px clamp(18px,5vw,44px);display:flex;align-items:center;justify-content:space-between;gap:16px}
+h1{font-size:clamp(30px,6vw,54px);line-height:1.12;margin:4px 0 6px}
+.hero-graphic{display:flex;align-items:center;gap:8px;background:#fff3c7;color:#25205d;border-radius:20px;padding:12px 16px;font-size:clamp(19px,3vw,32px);font-weight:800;white-space:nowrap;transform:rotate(3deg)}
+main{max-width:960px;margin:20px auto}article{border-top:6px solid #7960e1;box-shadow:0 12px 34px #30286e18}
+progress{height:13px;accent-color:#137c72;margin:6px 0 12px}
+h2{font-size:clamp(23px,4vw,32px);color:#312873}
+.scenario{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:16px;margin:14px 0;padding:14px 18px;border-radius:16px;background:#eeeaff;border-left:5px solid #7960e1}
+.scenario p{margin:0;font-size:clamp(22px,3.5vw,29px);font-weight:650;line-height:1.35}
+.illustration{display:grid;place-items:center;width:70px;aspect-ratio:1;background:#fff7d8;border-radius:15px;font-size:39px}
+.answer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 16px;padding:10px 0;border-bottom:1px solid #dfe4f1}
+.answer label{flex:1 1 250px;margin:0;font-size:clamp(20px,2.8vw,24px);line-height:1.3}
+.answer input{width:min(100%,8ch);min-height:46px;text-align:center;font-size:22px;font-weight:700;border:2px solid #6556a8;background:#faf8ff}
+button{min-height:44px;background:#383084;font-weight:700}button.secondary{background:#eae5ff;color:#332779}
+.actions button{background:#12665e}#status:empty{display:none}
+@media(max-width:540px){.hero-graphic{display:none}.scenario{gap:10px;padding:12px}.illustration{width:46px;font-size:27px}.answer label{flex-basis:100%}}
+</style>
+<header><div class="hero"><div><div>Profesor Carlos Huancaya Matos · Matemática</div><h1>Proporcionalidad</h1><div>Regla de tres simple directa</div></div><div class="hero-graphic" aria-hidden="true">📐 <span>2 : 4 = 3 : 6</span></div></div></header>
+<main><article><div id="meta" class="meta"></div><progress id="progress" max="20" aria-label="Problemas completados"></progress><h2 id="title" tabindex="-1"></h2><div id="content"></div><nav aria-label="Navegación"><button id="prev" class="secondary">Anterior</button><button id="next">Siguiente</button><button id="reset" class="secondary">Nueva ronda</button></nav></article></main>
+<script>
+const direct = [
+["Para preparar 15 panqueques se usan 3 tazas de leche.","15 panqueques","3 tazas",15,3,[["¿Cuántas tazas se necesitan para 35 panqueques?",35,"tazas"],["¿Cuántas para 50 panqueques?",50,"tazas"]]],
+["Una ciclista recorre 24 km en 3 horas a ritmo constante.","3 horas","24 km",3,24,[["¿Cuántos kilómetros recorre en 5 horas?",5,"km"],["¿Cuánto tarda en recorrer 56 km?",56,"horas",true]]],
+["En la feria, 4 kg de manzanas cuestan S/ 18.","4 kg","S/ 18",4,18,[["¿Cuánto cuestan 6 kg?",6,"soles"],["¿Cuánto cuestan 10 kg?",10,"soles"]]],
+["Una impresora imprime 72 fichas en 6 minutos a ritmo constante.","6 minutos","72 fichas",6,72,[["¿Cuántas fichas imprime en 9 minutos?",9,"fichas"],["¿Cuánto tarda en imprimir 180 fichas?",180,"minutos",true]]],
+["Con 8 litros de pintura se cubren 48 m², aplicando la misma capa.","8 litros","48 m²",8,48,[["¿Cuántos metros cuadrados se cubren con 13 litros?",13,"m²"],["¿Cuántos litros hacen falta para cubrir 90 m²?",90,"litros",true]]],
+["En un mapa, 3 cm representan 12 km.","3 cm","12 km",3,12,[["¿Qué distancia representan 7 cm?",7,"km"],["¿Cuántos centímetros representan 44 km?",44,"cm",true]]],
+["Un grifo llena 35 litros en 5 minutos con un caudal constante.","5 minutos","35 litros",5,35,[["¿Cuántos litros llena en 12 minutos?",12,"litros"],["¿En cuánto tiempo llena 105 litros?",105,"minutos",true]]],
+["Para confeccionar 4 cortinas iguales se necesitan 10 m de tela.","4 cortinas","10 m",4,10,[["¿Cuántos metros se necesitan para 7 cortinas?",7,"m"],["¿Cuántos para 12 cortinas?",12,"m"]]],
+["Un minibús consume 6 litros de combustible por cada 72 km en las mismas condiciones.","72 km","6 litros",72,6,[["¿Cuántos litros consume en 180 km?",180,"litros"],["¿Cuántos kilómetros puede recorrer con 20 litros?",20,"km",true]]],
+["Para germinar semillas, 6 bandejas iguales requieren 54 vasos de sustrato.","6 bandejas","54 vasos",6,54,[["¿Cuántos vasos se necesitan para 11 bandejas?",11,"vasos"],["¿Cuántas bandejas se pueden preparar con 144 vasos?",144,"bandejas",true]]],
+["Con 5 kg de naranjas se obtienen 3 litros de jugo. Mantén el mismo rendimiento.","5 kg","3 litros",5,3,[["¿Cuántos litros se obtienen con 15 kg?",15,"litros"],["¿Cuántos kilogramos se necesitan para obtener 12 litros?",12,"kg",true]]],
+["Un taller arma 42 cajas en 7 minutos a ritmo constante.","7 minutos","42 cajas",7,42,[["¿Cuántas cajas arma en 15 minutos?",15,"cajas"],["¿Cuánto tarda en armar 120 cajas?",120,"minutos",true]]],
+["Para hacer 8 pulseras se necesitan 96 cuentas del mismo tipo.","8 pulseras","96 cuentas",8,96,[["¿Cuántas cuentas se necesitan para 14 pulseras?",14,"cuentas"],["¿Cuántas pulseras se hacen con 216 cuentas?",216,"pulseras",true]]],
+["Cuatro paquetes idénticos contienen en total 600 hojas.","4 paquetes","600 hojas",4,600,[["¿Cuántas hojas hay en 7 paquetes?",7,"hojas"],["¿Cuántos paquetes contienen 1 800 hojas?",1800,"paquetes",true]]]
+].map(([body,left,right,a,b,items])=>({kind:"Proporcionalidad directa",body,items:items.map(([q,n,u,reverse])=>[q,n*(reverse?a:b)/(reverse?b:a),u]),key:items.map(([q,n,u,reverse],i)=>`${i+1}. ${reverse?right:left} corresponde a ${reverse?left:right}. x = (${n} × ${reverse?a:b}) ÷ ${reverse?b:a} = ${n*(reverse?a:b)/(reverse?b:a)} ${u}.`)}));
+const challenges = [
+{body:"En la librería, 5 lapiceros cuestan S/ 15. Luisa quiere comprar 12 y tiene S/ 40.",items:[["¿Cuánto costarán los 12 lapiceros?",36,"soles"],["¿Cuánto dinero le sobrará si los compra?",4,"soles"]],key:["Costo = (12 × 15) ÷ 5 = S/ 36.","Sí le alcanza. Le sobran S/ 40 − S/ 36 = S/ 4."]},
+{body:"Para 6 estudiantes se preparan 9 litros de refresco, con la misma cantidad para cada uno. Para una reunión de 20 estudiantes ya hay 24 litros preparados.",items:[["¿Cuántos litros se necesitan en total?",30,"litros"],["¿Cuántos litros faltan preparar?",6,"litros"]],key:["Cantidad total = (20 × 9) ÷ 6 = 30 litros.","Faltan 30 − 24 = 6 litros."]},
+{body:"Para empacar 4 regalos iguales se usan 6 m de cinta. Hay que empacar 18 regalos y se dispone de 25 m de cinta.",items:[["¿Cuántos metros de cinta se necesitan en total?",27,"m"],["¿Cuántos metros faltan?",2,"m"]],key:["Longitud total = (18 × 6) ÷ 4 = 27 m.","Faltan 27 − 25 = 2 m."]},
+{body:"Cuatro entradas para un museo cuestan S/ 30. Un grupo de 10 estudiantes reúne S/ 80 y todos pagan la misma tarifa.",items:[["¿Cuánto cuestan las 10 entradas?",75,"soles"],["¿Cuánto dinero sobra?",5,"soles"]],key:["Costo total = (10 × 30) ÷ 4 = S/ 75.","Sobran S/ 80 − S/ 75 = S/ 5."]}
+].map(p=>({...p,kind:"Reto"}));
+const additional = [
+{body:"En el mercado, 6 kg de arroz cuestan S/ 24. El precio por kilogramo es fijo.",items:[["¿Cuánto cuestan 9 kg?",36,"soles"],["¿Cuántos kilogramos se pueden comprar con S/ 52?",13,"kg"]],key:["Costo = (9 × 24) ÷ 6 = S/ 36.","Cantidad = (52 × 6) ÷ 24 = 13 kg."]},
+{body:"Una máquina envasa 45 botellas en 5 minutos a ritmo constante.",items:[["¿Cuántas botellas envasa en 8 minutos?",72,"botellas"],["¿Cuántos minutos necesita para envasar 108 botellas?",12,"minutos"]],key:["Cantidad = (8 × 45) ÷ 5 = 72 botellas.","Tiempo = (108 × 5) ÷ 45 = 12 minutos."]}
+].map(p=>({...p,kind:"Proporcionalidad directa"}));
+const problems=[...direct,...challenges,...additional];
+const illustrations=["🥞","🚲","🍎","🖨️","🎨","🗺️","🚰","🧵","🚐","🌱","🍊","📦","📿","📄","🖊️","🥤","🎁","🎟️","🍚","🧴"];
+const storageKey="profesor-carlos-proporcionalidad-v1";
+const el=id=>document.getElementById(id);
+function newRound(){
+  const order=problems.map((_,i)=>i);
+  for(let i=order.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [order[i],order[j]]=[order[j],order[i]];
+  }
+  return {order,index:0,answers:{}};
+}
+function load(){
+  try {
+    const s=JSON.parse(localStorage.getItem(storageKey));
+    if(s && s.order?.length===20 && new Set(s.order).size===20 &&
+      s.order.every(i=>Number.isInteger(i)&&i>=0&&i<20) &&
+      Number.isInteger(s.index)&&s.index>=0&&s.index<=20&&s.answers) {
+      for(const id of [18,19]){
+        if(["si","no"].includes(s.answers[id]?.values[0]) || s.answers[id]?.values.length===1) delete s.answers[id];
+      }
+      return s;
+    }
+  } catch {}
+  return newRound();
+}
+let state=load();
+function save(){try{localStorage.setItem(storageKey,JSON.stringify(state));}catch{}}
+function completed(){return Object.values(state.answers).filter(a=>a.done).length}
+function render(focus=false){
+  const position=state.index, end=position===20;
+  el("meta").textContent=`${completed()} de 20 completados`;
+  el("progress").value=completed();
+  el("prev").disabled=position===0;
+  el("next").hidden=end;
+  el("next").textContent=position===19?"Ver resumen":"Siguiente";
+  if(end){
+    el("title").textContent="Resumen de la ronda";
+    el("content").innerHTML=`<p>Completaste <strong>${completed()} de 20</strong> problemas.</p><label for="review">Volver a un problema</label><select id="review"><option value="">Selecciona un problema</option>${state.order.map((id,i)=>`<option value="${i}">Problema ${i+1} · ${state.answers[id]?.done?"Completado":"Pendiente"}</option>`).join("")}</select>`;
+    el("review").onchange=e=>{if(e.target.value!=="")go(Number(e.target.value));};
+  }else{
+    const id=state.order[position], p=problems[id];
+    const a=state.answers[id]??={values:[],done:false,feedback:""};
+    el("title").textContent=`Problema ${position+1} de 20`;
+    el("content").innerHTML=`<p class="meta">${p.kind}</p><div class="scenario"><span class="illustration" aria-hidden="true">${illustrations[id]}</span><p>${p.body}</p></div><form id="workform">
+    ${p.items.map(([q,v,u],i)=>`<div class="answer"><label for="r${i}">${q} (${u})</label><input id="r${i}" inputmode="decimal" autocomplete="off"></div>`).join("")}
+    <div class="actions"><button type="submit">Comprobar</button></div><div id="status" role="status"></div></form>
+    <details id="solution" hidden><summary>Ver solución paso a paso</summary>${p.key.map(k=>`<p>${k}</p>`).join("")}</details>`;
+    const fields=Array.from({length:p.items.length},(_,i)=>el("r"+i));
+    fields.forEach((f,i)=>f.value=a.values[i]??"");
+    function feedback(){
+      el("status").textContent=a.feedback;
+      el("solution").hidden=!a.done;
+      el("meta").textContent=`${completed()} de 20 completados`;
+      el("progress").value=completed();
+    }
+    el("workform").oninput=()=>{
+      a.values=fields.map(f=>f.value);
+      a.done=false;a.feedback="";el("solution").open=false;
+      feedback();save();
+    };
+    el("workform").onsubmit=e=>{
+      e.preventDefault();
+      a.values=fields.map(f=>f.value.trim());
+      const wrong=p.items.flatMap((item,i)=>{
+        const value=a.values[i].replace(",","."), n=Number(value);
+        return /^\d+(\.\d+)?$/.test(value)&&Math.abs(n-item[1])<1e-8?[]:[i+1];
+      });
+      a.done=false;
+      if(a.values.some(v=>!v))a.feedback="Completa las respuestas.";
+      else if(wrong.length)a.feedback=`Revisa ${wrong.length===1?"la respuesta":"las respuestas"} ${wrong.join(" y ")}.`;
+      else {a.done=true;a.feedback="Resultados correctos. Puedes comparar tus operaciones con la solución.";}
+      feedback();save();
+    };
+    feedback();
+  }
+  if(focus)el("title").focus();
+}
+function go(index){state.index=index;save();render(true);}
+el("prev").onclick=()=>go(state.index-1);
+el("next").onclick=()=>go(state.index+1);
+el("reset").onclick=()=>{if(confirm("¿Mezclar los problemas y borrar las respuestas de esta ronda?")){state=newRound();save();render(true);}};
+save();render();
+</script></html>
